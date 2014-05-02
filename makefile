@@ -8,5 +8,5 @@ clean:
 mine:	mine.o
 	$(CC) -lncurses -o mine mine.o
 
-mine.o:	mine.c CONSTANT.h start_scene.h
+mine.o:	mine.c CONSTANT.h start_scene.h game_scene.h
 	$(CC) -c mine.c
