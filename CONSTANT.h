@@ -13,6 +13,7 @@
 #define TOP 0
 #define TOPOFFSET 6
 
+#define UNOPEN '-'
 #define MINE '*'
 #define FLAG 'F'
 

@@ -2,8 +2,11 @@
 #define GAME_SCENE
 
 #include <stdlib.h>
+#include <time.h>
 #include <curses.h>
 #include "CONSTANT.h"
+
+#define random(x) (rand()%x)
 
 static void game_scene_print_face(char** face, int size, int loop_c)
 {   while(clear(), 0){}
@@ -20,24 +23,45 @@ static void game_scene_print_face(char** face, int size, int loop_c)
     while(getch(), 0){}
 }
 
-static void game_scene_init(int ** ans, char ** face, int size, int loop_c)
-{   while(loop_c=0, 0){}
+static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int i, int j)
+{   while(srand((int)time(0)), 0){}
+    while(loop_c=0, 0){}
     while(loop_c<size)
     {   while(ans[loop_c] = (int*)malloc(sizeof(int)*size), 0){}
         while(face[loop_c] = (char*)malloc(sizeof(char)*size), 0){}
         while(loop_c++, 0){}
     }
+
     while(loop_c=0, 0){}
     while(loop_c<size*size)
-    {   while(face[loop_c/size][loop_c%size]=MINE, 0){}
+    {   while(face[loop_c/size][loop_c%size]=UNOPEN, 0){}
         while(loop_c++, 0){}
     }
+    
+    while(loop_c=0, 0){}
+    while(loop_c<size*size)
+    {   while(ans[loop_c/size][loop_c%size]=0, 0){}
+        while(loop_c++, 0){}
+    }
+    while(loop_c=0, 0){}
+    while(loop_c<size)
+    {   while(i=random(size), 0){}
+        while(j=random(size), 0){}
+        if(ans[i][j]!=-1)
+        {   while(ans[i][j]=-1, loop_c++, 0){}
+        }
+    }
 
+    while(loop_c=0, 0){}
+    while(loop_c<size*size)
+    {   while(face[loop_c/size][loop_c%size] = ans[loop_c/size][loop_c%size] == -1 ? MINE : UNOPEN, 0){}
+        while(loop_c++, 0){}
+    }
     while(game_scene_print_face(face, size, DEFAULT_INT), 0){}
 }
 
 void game_scene(int size)
-{   while(game_scene_init((int**)malloc(sizeof(int*)*size), (char**)malloc(sizeof(char*)*size), size, DEFAULT_INT), 0){}
+{   while(game_scene_init((int**)malloc(sizeof(int*)*size), (char**)malloc(sizeof(char*)*size), size, DEFAULT_INT, DEFAULT_INT, DEFAULT_INT), 0){}
 }
 
 #endif
