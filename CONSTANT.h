@@ -9,9 +9,9 @@
 #define RIGHT COLS-1
 #define BOTTOM LINES-1
 #define LEFT 0
-#define HCENTRE (RIGHT+LEFT)/2
+#define LEFTOFFSET 6
 #define TOP 0
-#define VCENTRE (TOP+BOTTOM)/2
+#define TOPOFFSET 6
 
 #define MINE '*'
 #define FLAG 'F'
