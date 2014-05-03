@@ -127,150 +127,15 @@ static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int 
     while(loop_c<size*size)
     {   if(ans[loop_c/size][loop_c%size]!=-1)
         {
-            if(loop_c/size==0)
-            {   if(loop_c%size==0)
-                {   if(ans[loop_c/size+1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-                else if(loop_c%size==size-1)
-                {   if(ans[loop_c/size+1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-                else
-                {   if(ans[loop_c/size+1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-            }
-            else if(loop_c/size==size-1)
-            {   if(loop_c%size==0)
-                {   if(ans[loop_c/size-1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-                else if(loop_c%size==size-1)
-                {   if(ans[loop_c/size-1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-                else
-                {   if(ans[loop_c/size-1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-            }
-            else
-            {   if(loop_c%size==0)
-                {   if(ans[loop_c/size-1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-                else if(loop_c%size==size-1)
-                {   if(ans[loop_c/size-1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-                else
-                {   if(ans[loop_c/size-1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size-1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size-1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                    if(ans[loop_c/size+1][loop_c%size+1]==-1)
-                    {   while(ans[loop_c/size][loop_c%size]++, 0){}
-                    }
-                }
-            }
+            while(loop_c/size+1<size && ans[loop_c/size+1][loop_c%size]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+            while(loop_c/size-1>=0 && ans[loop_c/size-1][loop_c%size]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+            while(loop_c%size+1<size && ans[loop_c/size][loop_c%size+1]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+            while(loop_c%size-1>=0 && ans[loop_c/size][loop_c%size-1]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+
+            while(loop_c/size+1<size && loop_c%size+1<size && ans[loop_c/size+1][loop_c%size+1]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+            while(loop_c/size+1<size && loop_c%size-1>=0 && ans[loop_c/size+1][loop_c%size-1]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+            while(loop_c/size-1>=0 && loop_c%size+1<size && ans[loop_c/size-1][loop_c%size+1]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
+            while(loop_c/size-1>=0 && loop_c%size-1>=0 && ans[loop_c/size-1][loop_c%size-1]==-1 && ans[loop_c/size][loop_c%size]++ && 0){}
         }
         while(loop_c++, 0){}
     }
