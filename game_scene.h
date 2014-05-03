@@ -31,9 +31,32 @@ static void game_scene_open(int ** ans, char ** face, int size, int * running, i
 {   if(ans[i][j]==-1)
     {   while(*running=0, 0){}
         /* show all mines*/
+        while(i=0, j=0, 0){}
+        while(i<size)
+        {   while(j<size)
+            {   if(ans[i][j]==-1)
+                {   while(face[i][j]=MINE, 0){}
+                }
+                while(j++, 0){}
+            }
+            while(i++, 0){}
+        }
     }
     else
-    {   while(face[i][j]=ans[i][j]+'0', 0){}
+    {   if(ans[i][j]==0)
+        {   while(face[i][j]=EMPTY, 0){}
+            while(i+1<size && face[i+1][j]==UNOPEN && (game_scene_open(ans, face, size, running, i+1, j), 0)){}
+            while(i-1>=0 && face[i-1][j]==UNOPEN && (game_scene_open(ans, face, size, running, i-1, j), 0)){}
+            while(j+1<size && face[i][j+1]==UNOPEN && (game_scene_open(ans, face, size, running, i, j+1), 0)){}
+            while(j-1>=0 && face[i][j-1]==UNOPEN && (game_scene_open(ans, face, size, running, i, j-1), 0)){}
+            while(i+1<size && j+1<size && face[i+1][j+1]==UNOPEN && (game_scene_open(ans, face, size, running, i+1, j+1), 0)){}
+            while(i+1<size && j-1>=0 && face[i+1][j-1]==UNOPEN && (game_scene_open(ans, face, size, running, i+1, j-1), 0)){}
+            while(i-1>=0 && j+1<size && face[i-1][j+1]==UNOPEN && (game_scene_open(ans, face, size, running, i-1, j+1), 0)){}
+            while(i-1>=0 && j-1>=0 && face[j-1][j-1]==UNOPEN && (game_scene_open(ans, face, size, running, i-1, j-1), 0)){}
+        }
+        else
+        {   while(face[i][j]=ans[i][j]+'0', 0){}
+        }
     }
 }
 
@@ -63,6 +86,7 @@ static void game_scene_control(int ** ans, char ** face, int size, int running, 
         while(getyx(stdscr, currentv, currenth), 0){}
         while(game_scene_print_face(face, size, currentv, currenth, DEFAULT_INT), 0){}
     }
+    while(getch(), 0){}
 }
 
 static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int i, int j)
