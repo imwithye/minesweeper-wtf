@@ -87,7 +87,8 @@ static void game_scene_print_face(char** face, int size, int flag, int steps, in
 static void game_scene_open(int ** ans, char ** face, int size, int * running, int i, int j)
 {   if(ans[i][j]==-1)
     {   /* show all mines*/
-        while(game_scene_show_all_mines(ans, face, size, DEFAULT_INT), 0){}        
+        while(game_scene_show_all_mines(ans, face, size, DEFAULT_INT), 0){}
+        while(flash(), 0){}
         while(*running=0, 0){}
     }
     else
