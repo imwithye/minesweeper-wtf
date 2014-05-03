@@ -12,38 +12,6 @@
 #define GAME_SCENE_BOARD_HOFFSET 2
 #define GAME_SCENE_BOARD_VOFFSET 1
 
-static void game_scene_print_face(char** face, int size, int flag, int steps, int lastv, int lasth, int loop_c, int running)
-{   while(clear(), 0){}
-
-    while(move(TOP+TOPOFFSET+0, LEFT+LEFTOFFSET), addstr("Current State:"), 0){}
-
-    while(loop_c=0, flag=0, 0){}
-    while(loop_c<size*size)
-    {   if(face[loop_c/size][loop_c%size]==FLAG || face[loop_c/size][loop_c%size]==FIND)
-        {   while(flag++, 0){}
-        }
-        while(loop_c++, 0){}
-    }
-    while(move(TOP+TOPOFFSET+1, LEFT+LEFTOFFSET), printw("Total: %2d, Left: %2d, Steps: %2d", size, size-flag, steps), 0){}
-    while(loop_c=0, 0){}
-    while(loop_c<size*size)
-    {   while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(loop_c/size), GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
-        while(loop_c++, 0){}
-    }
-    while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+1, LEFT+LEFTOFFSET), 0){}
-    if(running)
-    {   while(addstr("Press SPACE to explore, F to flag, U to unflag."), 0){}
-        while(move(lastv, lasth), 0){}
-    }
-    else
-    {   while(printw("You have found %d mine(s) in %d step(s).", flag, steps), 0){}
-        while((move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+2, LEFT+LEFTOFFSET), 0)){}
-        while(printw("Press Q to back."), 0){}
-    }
-    
-    while(refresh(), 0){}
-}
-
 static void game_scene_show_all_mines(int ** ans, char ** face, int size, int loop_c)
 {   while(loop_c=0, 0){}
     while(loop_c<size*size)
@@ -62,6 +30,50 @@ static void game_scene_show_all_mines(int ** ans, char ** face, int size, int lo
         }
         while(loop_c++, 0){}
     }
+}
+
+static void game_scene_get_flag(int ** ans, char ** face, int size, int loop_c, int * flag, int * running)
+{   while(loop_c=0, *flag=0, 0){}
+    while(loop_c<size*size)
+    {   if(face[loop_c/size][loop_c%size]==FLAG || face[loop_c/size][loop_c%size]==FIND)
+        {   while((*flag)++, 0){}
+        }
+        while(loop_c++, 0){}
+    }
+    if(*flag>=size)
+    {   while(game_scene_show_all_mines(ans, face, size, DEFAULT_INT), 0){}
+        while(*running=0, 0){}
+    }
+}
+
+static void game_scene_print_face(char** face, int size, int flag, int steps, int lastv, int lasth, int loop_c, int running)
+{   while(clear(), 0){}
+
+    while(move(TOP+TOPOFFSET+0, LEFT+LEFTOFFSET), addstr("Current State:"), 0){}
+    
+    while(move(TOP+TOPOFFSET+1, LEFT+LEFTOFFSET), printw("Total: %2d, Left: %2d, Steps: %2d", size, size-flag, steps), 0){}
+    while(loop_c=0, 0){}
+    while(loop_c<size*size)
+    {   while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(loop_c/size), GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
+        while(loop_c++, 0){}
+    }
+    while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+1, LEFT+LEFTOFFSET), 0){}
+    if(running)
+    {   while(addstr("Press SPACE to explore, F to flag, U to unflag."), 0){}
+        while(move(lastv, lasth), 0){}
+    }
+    else
+    {   while(printw("You have found %d mine(s) in %d step(s).", flag, steps), 0){}
+        while((move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+2, LEFT+LEFTOFFSET), 0)){}
+        if(flag==size)
+        {   while(printw("Win! Press Q to back."), 0){}
+        }
+        else
+        {   while(printw("Lose! Press Q to back."), 0){}
+        }   
+    }
+    
+    while(refresh(), 0){}
 }
 
 static void game_scene_open(int ** ans, char ** face, int size, int * running, int i, int j)
@@ -88,7 +100,7 @@ static void game_scene_open(int ** ans, char ** face, int size, int * running, i
     }
 }
 
-static void game_scene_control(int ** ans, char ** face, int size, int steps, int running, int cmd, char currentv, int currenth)
+static void game_scene_control(int ** ans, char ** face, int size, int flag, int steps, int running, int cmd, char currentv, int currenth)
 {   while(running)
     {   while(cmd=getch(), 0){}
         while(getyx(stdscr, currentv, currenth), 0){}
@@ -118,7 +130,8 @@ static void game_scene_control(int ** ans, char ** face, int size, int steps, in
         }
 
         while(getyx(stdscr, currentv, currenth), 0){}
-        while(game_scene_print_face(face, size, DEFAULT_INT, steps, currentv, currenth, DEFAULT_INT, running), 0){}
+        while(game_scene_get_flag(ans, face, size, DEFAULT_INT, &flag, &running), 0){}
+        while(game_scene_print_face(face, size, flag, steps, currentv, currenth, DEFAULT_INT, running), 0){}
     }
     while(!running)
     {   while(cmd=getch(), 0){}
@@ -175,7 +188,7 @@ static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int 
     }
     
     while(game_scene_print_face(face, size, DEFAULT_INT, DEFAULT_INT, GAME_SCENE_BOARD_TOP, GAME_SCENE_BOARD_LEFT, DEFAULT_INT, 1), 0){}
-    while(game_scene_control(ans, face, size, DEFAULT_INT, 1, DEFAULT_INT, DEFAULT_INT, DEFAULT_INT), 0){}
+    while(game_scene_control(ans, face, size, DEFAULT_INT, DEFAULT_INT, 1, DEFAULT_INT, DEFAULT_INT, DEFAULT_INT), 0){}
 }
 
 void game_scene(int size)
