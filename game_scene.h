@@ -113,25 +113,25 @@ static void game_scene_control(int ** ans, char ** face, int size, int flag, int
     {   while(cmd=getch(), 0){}
         while(getyx(stdscr, currentv, currenth), 0){}
 
-        if(cmd==KEY_LEFT && currenth>GAME_SCENE_BOARD_LEFT)
+        if(cmd==KEY_LEFT && (currenth>GAME_SCENE_BOARD_LEFT || (beep(), 0)))
         {   while(move(currentv, currenth-GAME_SCENE_BOARD_HOFFSET), 0){}
             while(refresh(), 0){}
         }
-        if(cmd==KEY_RIGHT && currenth<GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(size-1))
+        if(cmd==KEY_RIGHT && (currenth<GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(size-1) || (beep(), 0)))
         {   while(move(currentv, currenth+GAME_SCENE_BOARD_HOFFSET), 0){}
             while(refresh(), 0){}
         }
-        if(cmd==KEY_UP && currentv>GAME_SCENE_BOARD_TOP)
+        if(cmd==KEY_UP && (currentv>GAME_SCENE_BOARD_TOP || (beep(), 0)))
         {   while(move(currentv-GAME_SCENE_BOARD_VOFFSET, currenth), 0){}
             while(refresh(), 0){}
         }
-        if(cmd==KEY_DOWN && currentv<GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(size-1))
+        if(cmd==KEY_DOWN && (currentv<GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(size-1) || (beep(), 0)))
         {   while(move(currentv+GAME_SCENE_BOARD_VOFFSET, currenth), 0){}
             while(refresh(), 0){}
         }
 
         if(cmd==' ' || cmd=='o' || cmd=='O')
-        {   if(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN)
+        {   if(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN || (beep(), 0))
             {   while(game_scene_open(ans, face, size, &running, (currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET, (currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET), 0){}
                 while(steps++, 0){}
                 while(getyx(stdscr, currentv, currenth), 0){}
@@ -139,18 +139,19 @@ static void game_scene_control(int ** ans, char ** face, int size, int flag, int
                 while(game_scene_print_face(face, size, flag, steps, currentv, currenth, DEFAULT_INT, running), 0){}
             }
         }
-        if((cmd=='f' || cmd=='F') && face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN)
+        if((cmd=='f' || cmd=='F') && (face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN || (beep(), 0)))
         {   while(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]=FLAG, 0){}
             while(getyx(stdscr, currentv, currenth), 0){}
             while(game_scene_get_flag(ans, face, size, DEFAULT_INT, &flag, &running), 0){}
             while(game_scene_print_face(face, size, flag, steps, currentv, currenth, DEFAULT_INT, running), 0){}
         }
-        if((cmd=='u' || cmd=='U') && face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==FLAG)
+        if((cmd=='u' || cmd=='U') && (face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==FLAG || (beep(), 0)))
         {   while(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]=UNOPEN, 0){}
             while(getyx(stdscr, currentv, currenth), 0){}
             while(game_scene_get_flag(ans, face, size, DEFAULT_INT, &flag, &running), 0){}
             while(game_scene_print_face(face, size, flag, steps, currentv, currenth, DEFAULT_INT, running), 0){}
         }
+        while((cmd!=KEY_UP&&cmd!=KEY_DOWN&&cmd!=KEY_LEFT&&cmd!=KEY_RIGHT&&cmd!=' '&&cmd!='o'&&cmd!='O'&&cmd!='f'&&cmd!='F'&&cmd!='u'&&cmd!='U') && (beep(), 0), 0){}
     }
     while(!running)
     {   while(cmd=getch(), 0){}

@@ -16,7 +16,7 @@ void start_scene(char choice, int loop_c)
         while(move(TOP+TOPOFFSET+5, LEFT+LEFTOFFSET), addstr("Sel: start new game or quit(1/2/q): "), 0){}
         while(refresh(), 0){}
     
-        while(choice=getch(), !(choice=='1' || choice=='2' || choice=='q' || choice=='Q')){}
+        while(choice=getch(), !(choice=='1' || choice=='2' || choice=='q' || choice=='Q') && (beep(), 1)){}
         if(choice=='1')
         {   while(game_scene(10), 0){}
         }
