@@ -28,8 +28,7 @@ static void game_scene_print_face(char** face, int size, int lastv, int lasth, i
         while(move(lastv, lasth), 0){}
     }
     else
-    {   while(addstr("Press ESC to back."), 0){}
-        while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+1, LEFT+LEFTOFFSET), 0){}
+    {   while(printw("Press Q to back."), 0){}
     }
     
     while(refresh(), 0){}
@@ -65,8 +64,7 @@ static void game_scene_open(int ** ans, char ** face, int size, int * running, i
 
 static void game_scene_control(int ** ans, char ** face, int size, int running, int cmd, char currentv, int currenth)
 {   while(running)
-    {
-        while(cmd=getch(), 0){}
+    {   while(cmd=getch(), 0){}
         while(getyx(stdscr, currentv, currenth), 0){}
 
         if(cmd==KEY_LEFT && currenth>GAME_SCENE_BOARD_LEFT)
@@ -90,7 +88,10 @@ static void game_scene_control(int ** ans, char ** face, int size, int running, 
         while(game_scene_print_face(face, size, currentv, currenth, DEFAULT_INT, running), 0){}
     }
     while(!running)
-    {   
+    {   while(cmd=getch(), 0){}
+        if(cmd=='q' || cmd=='Q')
+        {   while(running=1, 0){}
+        }
     }
 }
 

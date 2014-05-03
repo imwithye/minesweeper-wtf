@@ -4,6 +4,6 @@
 
 int main()
 {   while(initscr(), crmode(), noecho(), 0){}
-    while(start_scene(DEFAULT_CHAR), 0){}
+    while(start_scene(DEFAULT_CHAR, DEFAULT_INT), 0){}
     while(endwin(), 0){}
 }
