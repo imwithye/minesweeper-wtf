@@ -19,7 +19,7 @@ static void game_scene_print_face(char** face, int size, int flag, int steps, in
 
     while(loop_c=0, flag=0, 0){}
     while(loop_c<size*size)
-    {   if(face[loop_c/size][loop_c%size]==FLAG)
+    {   if(face[loop_c/size][loop_c%size]==FLAG || face[loop_c/size][loop_c%size]==FIND)
         {   while(flag++, 0){}
         }
         while(loop_c++, 0){}
@@ -30,13 +30,15 @@ static void game_scene_print_face(char** face, int size, int flag, int steps, in
     {   while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(loop_c/size), GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
         while(loop_c++, 0){}
     }
-    while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size, LEFT+LEFTOFFSET), 0){}
+    while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+1, LEFT+LEFTOFFSET), 0){}
     if(running)
     {   while(addstr("Press SPACE to explore, F to flag, U to unflag."), 0){}
         while(move(lastv, lasth), 0){}
     }
     else
-    {   while(printw("Press Q to back."), 0){}
+    {   while(printw("You have found %d mine(s) in %d step(s).", flag, steps), 0){}
+        while((move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size+2, LEFT+LEFTOFFSET), 0)){}
+        while(printw("Press Q to back."), 0){}
     }
     
     while(refresh(), 0){}
