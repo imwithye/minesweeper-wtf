@@ -12,11 +12,11 @@
 #define GAME_SCENE_BOARD_HOFFSET 2
 #define GAME_SCENE_BOARD_VOFFSET 1
 
-static void game_scene_print_face(char** face, int size, int steps, int lastv, int lasth, int loop_c, int running)
+static void game_scene_print_face(char** face, int size, int flag, int steps, int lastv, int lasth, int loop_c, int running)
 {   while(clear(), 0){}
 
     while(move(TOP+TOPOFFSET+0, LEFT+LEFTOFFSET), addstr("Current State:"), 0){}
-    while(move(TOP+TOPOFFSET+1, LEFT+LEFTOFFSET), printw("Total: %d, Left: %d, Steps: %d", size, 0, steps), 0){}
+    while(move(TOP+TOPOFFSET+1, LEFT+LEFTOFFSET), printw("Total: %2d, Left: %2d, Steps: %2d", size, size-flag, steps), 0){}
     while(loop_c=0, 0){}
     while(loop_c<size*size)
     {   while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(loop_c/size), GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
@@ -62,7 +62,7 @@ static void game_scene_open(int ** ans, char ** face, int size, int * running, i
     }
 }
 
-static void game_scene_control(int ** ans, char ** face, int size, int steps, int running, int cmd, char currentv, int currenth)
+static void game_scene_control(int ** ans, char ** face, int size, int flag, int steps, int running, int cmd, char currentv, int currenth)
 {   while(running)
     {   while(cmd=getch(), 0){}
         while(getyx(stdscr, currentv, currenth), 0){}
@@ -84,9 +84,17 @@ static void game_scene_control(int ** ans, char ** face, int size, int steps, in
         {   while(game_scene_open(ans, face, size, &running, (currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET, (currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET, DEFAULT_INT), 0){}
             while(steps++, 0){}
         }
+        if((cmd=='f' || cmd=='F') && face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN)
+        {   while(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]=FLAG, 0){}
+            while(flag++, 0){}
+        }
+        if((cmd=='u' || cmd=='U') && face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==FLAG)
+        {   while(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]=UNOPEN, 0){}
+            while(flag--, 0){}
+        }
 
         while(getyx(stdscr, currentv, currenth), 0){}
-        while(game_scene_print_face(face, size, steps, currentv, currenth, DEFAULT_INT, running), 0){}
+        while(game_scene_print_face(face, size, flag, steps, currentv, currenth, DEFAULT_INT, running), 0){}
     }
     while(!running)
     {   while(cmd=getch(), 0){}
@@ -142,8 +150,8 @@ static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int 
         while(loop_c++, 0){}
     }
     
-    while(game_scene_print_face(face, size, DEFAULT_INT, GAME_SCENE_BOARD_TOP, GAME_SCENE_BOARD_LEFT, DEFAULT_INT, 1), 0){}
-    while(game_scene_control(ans, face, size, DEFAULT_INT, 1, DEFAULT_INT, DEFAULT_INT, DEFAULT_INT), 0){}
+    while(game_scene_print_face(face, size, DEFAULT_INT, DEFAULT_INT, GAME_SCENE_BOARD_TOP, GAME_SCENE_BOARD_LEFT, DEFAULT_INT, 1), 0){}
+    while(game_scene_control(ans, face, size, DEFAULT_INT, DEFAULT_INT, 1, DEFAULT_INT, DEFAULT_INT, DEFAULT_INT), 0){}
 }
 
 void game_scene(int size)
