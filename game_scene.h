@@ -119,8 +119,10 @@ static void game_scene_control(int ** ans, char ** face, int size, int flag, int
         }
 
         if(cmd==' ' || cmd=='o' || cmd=='O')
-        {   while(game_scene_open(ans, face, size, &running, (currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET, (currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET), 0){}
-            while(steps++, 0){}
+        {   if(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN)
+            {   while(game_scene_open(ans, face, size, &running, (currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET, (currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET), 0){}
+                while(steps++, 0){}
+            }
         }
         if((cmd=='f' || cmd=='F') && face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN)
         {   while(face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]=FLAG, 0){}
