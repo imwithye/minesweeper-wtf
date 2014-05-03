@@ -17,5 +17,7 @@
 #define EMPTY ' '
 #define MINE '*'
 #define FLAG 'F'
+#define FIND 'R'
+#define WRONG 'W'
 
 #endif

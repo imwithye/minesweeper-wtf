@@ -42,27 +42,43 @@ static void game_scene_print_face(char** face, int size, int flag, int steps, in
     while(refresh(), 0){}
 }
 
-static void game_scene_open(int ** ans, char ** face, int size, int * running, int i, int j, int loop_c)
+static void game_scene_show_all_mines(int ** ans, char ** face, int size, int loop_c)
+{   while(loop_c=0, 0){}
+    while(loop_c<size*size)
+    {   if(ans[loop_c/size][loop_c%size]==-1)
+        {   if(face[loop_c/size][loop_c%size]==FLAG)
+            {   while(face[loop_c/size][loop_c%size]=FIND, 0){}
+            }
+            else
+            {   while(face[loop_c/size][loop_c%size]=MINE, 0){}
+            }
+        }
+        else
+        {   if(face[loop_c/size][loop_c%size]==FLAG)
+            {   while(face[loop_c/size][loop_c%size]=WRONG, 0){}
+            }
+        }
+        while(loop_c++, 0){}
+    }
+}
+
+static void game_scene_open(int ** ans, char ** face, int size, int * running, int i, int j)
 {   if(ans[i][j]==-1)
     {   /* show all mines*/
-        while(loop_c=0, 0){}
-        while(loop_c<size*size)
-        {   while(face[loop_c/size][loop_c%size] = ans[loop_c/size][loop_c%size] == -1 ? MINE : face[loop_c/size][loop_c%size], 0){}
-            while(loop_c++, 0){}
-        }
+        while(game_scene_show_all_mines(ans, face, size, DEFAULT_INT), 0){}        
         while(*running=0, 0){}
     }
     else
     {   if(ans[i][j]==0)
         {   while(face[i][j]=EMPTY, 0){}
-            while(i+1<size && (face[i+1][j]==UNOPEN || face[i+1][j]==FLAG) && (game_scene_open(ans, face, size, running, i+1, j, DEFAULT_INT), 0)){}
-            while(i-1>=0 && (face[i-1][j]==UNOPEN || face[i-1][j]==FLAG) && (game_scene_open(ans, face, size, running, i-1, j, DEFAULT_INT), 0)){}
-            while(j+1<size && (face[i][j+1]==UNOPEN || face[i][j+1]==FLAG) && (game_scene_open(ans, face, size, running, i, j+1, DEFAULT_INT), 0)){}
-            while(j-1>=0 && (face[i][j-1]==UNOPEN || face[i][j-1]==FLAG) && (game_scene_open(ans, face, size, running, i, j-1, DEFAULT_INT), 0)){}
-            while(i+1<size && j+1<size && (face[i+1][j+1]==UNOPEN || face[i+1][j+1]==FLAG) && (game_scene_open(ans, face, size, running, i+1, j+1, DEFAULT_INT), 0)){}
-            while(i+1<size && j-1>=0 && (face[i+1][j-1]==UNOPEN || face[i+1][j-1]==FLAG) && (game_scene_open(ans, face, size, running, i+1, j-1, DEFAULT_INT), 0)){}
-            while(i-1>=0 && j+1<size && (face[i-1][j+1]==UNOPEN || face[i-1][j+1]==FLAG) && (game_scene_open(ans, face, size, running, i-1, j+1, DEFAULT_INT), 0)){}
-            while(i-1>=0 && j-1>=0 && (face[j-1][j-1]==UNOPEN || face[i-1][j-1]==FLAG) && (game_scene_open(ans, face, size, running, i-1, j-1, DEFAULT_INT), 0)){}
+            while(i+1<size && (face[i+1][j]==UNOPEN || face[i+1][j]==FLAG) && (game_scene_open(ans, face, size, running, i+1, j), 0)){}
+            while(i-1>=0 && (face[i-1][j]==UNOPEN || face[i-1][j]==FLAG) && (game_scene_open(ans, face, size, running, i-1, j), 0)){}
+            while(j+1<size && (face[i][j+1]==UNOPEN || face[i][j+1]==FLAG) && (game_scene_open(ans, face, size, running, i, j+1), 0)){}
+            while(j-1>=0 && (face[i][j-1]==UNOPEN || face[i][j-1]==FLAG) && (game_scene_open(ans, face, size, running, i, j-1), 0)){}
+            while(i+1<size && j+1<size && (face[i+1][j+1]==UNOPEN || face[i+1][j+1]==FLAG) && (game_scene_open(ans, face, size, running, i+1, j+1), 0)){}
+            while(i+1<size && j-1>=0 && (face[i+1][j-1]==UNOPEN || face[i+1][j-1]==FLAG) && (game_scene_open(ans, face, size, running, i+1, j-1), 0)){}
+            while(i-1>=0 && j+1<size && (face[i-1][j+1]==UNOPEN || face[i-1][j+1]==FLAG) && (game_scene_open(ans, face, size, running, i-1, j+1), 0)){}
+            while(i-1>=0 && j-1>=0 && (face[j-1][j-1]==UNOPEN || face[i-1][j-1]==FLAG) && (game_scene_open(ans, face, size, running, i-1, j-1), 0)){}
         }
         else
         {   while(face[i][j]=ans[i][j]+'0', 0){}
@@ -89,7 +105,7 @@ static void game_scene_control(int ** ans, char ** face, int size, int steps, in
         }
 
         if(cmd==' ' || cmd=='o' || cmd=='O')
-        {   while(game_scene_open(ans, face, size, &running, (currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET, (currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET, DEFAULT_INT), 0){}
+        {   while(game_scene_open(ans, face, size, &running, (currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET, (currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET), 0){}
             while(steps++, 0){}
         }
         if((cmd=='f' || cmd=='F') && face[(currentv-GAME_SCENE_BOARD_TOP)/GAME_SCENE_BOARD_VOFFSET][(currenth-GAME_SCENE_BOARD_LEFT)/GAME_SCENE_BOARD_HOFFSET]==UNOPEN)
