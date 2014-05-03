@@ -1,7 +1,7 @@
 Minesweeper
 ===
 
-Does C programming really need semicolons? This is simple console minesweeper game written in C but no use of any semicolons.
+Does C programming really need semicolons? This is a simple console minesweeper game written in C with no use of any semicolons.
 
 You may clone this repo, then run
 
