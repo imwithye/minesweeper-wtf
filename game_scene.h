@@ -9,8 +9,8 @@
 #define random(x) (rand()%x)
 #define GAME_SCENE_BOARD_LEFT (LEFT+LEFTOFFSET)
 #define GAME_SCENE_BOARD_TOP (TOP+TOPOFFSET+3)
-#define GAME_SCENE_BOARD_HOFFSET 2
-#define GAME_SCENE_BOARD_VOFFSET 1
+#define GAME_SCENE_BOARD_HOFFSET 4
+#define GAME_SCENE_BOARD_VOFFSET 2
 
 static void game_scene_show_all_mines(int ** ans, char ** face, int size, int loop_c)
 {   while(loop_c=0, 0){}
