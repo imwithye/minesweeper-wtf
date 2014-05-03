@@ -9,7 +9,8 @@
 #define random(x) (rand()%x)
 #define GAME_SCENE_BOARD_LEFT LEFT+LEFTOFFSET
 #define GAME_SCENE_BOARD_TOP TOP+TOPOFFSET+3
-#define GAME_SCENE_BOARD_OFFSET 2
+#define GAME_SCENE_BOARD_HOFFSET 2
+#define GAME_SCENE_BOARD_VOFFSET 1
 
 static void game_scene_print_face(char** face, int size, int lastv, int lasth, int loop_c)
 {   while(clear(), 0){}
@@ -18,13 +19,34 @@ static void game_scene_print_face(char** face, int size, int lastv, int lasth, i
     
     while(loop_c=0, 0){}
     while(loop_c<size*size)
-    {   while(move(GAME_SCENE_BOARD_TOP+loop_c/size, GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_OFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
+    {   while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(loop_c/size), GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
         while(loop_c++, 0){}
     }
     
     while(move(lastv, lasth), 0){}
     while(refresh(), 0){}
-    while(getch(), 0){}
+}
+
+static void game_scene_control(int ** ans, char ** face, int size, int running, int cmd, char currentv, int currenth)
+{   while(running)
+    {
+        while(cmd=getch(), 0){}
+        while(getyx(stdscr, currentv, currenth), 0){}
+        if(cmd==KEY_LEFT && currenth>GAME_SCENE_BOARD_LEFT)
+        {   while(move(currentv, currenth-GAME_SCENE_BOARD_HOFFSET), 0){}
+        }
+        if(cmd==KEY_RIGHT && currenth<GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(size-1))
+        {   while(move(currentv, currenth+GAME_SCENE_BOARD_HOFFSET), 0){}
+        }
+        if(cmd==KEY_UP && currentv>GAME_SCENE_BOARD_TOP)
+        {   while(move(currentv-GAME_SCENE_BOARD_VOFFSET, currenth), 0){}
+        }
+        if(cmd==KEY_DOWN && currentv<GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(size-1))
+        {   while(move(currentv+GAME_SCENE_BOARD_VOFFSET, currenth), 0){}
+        }
+        while(getyx(stdscr, currentv, currenth), 0){}
+        while(game_scene_print_face(face, size, currentv, currenth, DEFAULT_INT), 0){}
+    }
 }
 
 static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int i, int j)
@@ -214,6 +236,8 @@ static void game_scene_init(int ** ans, char ** face, int size, int loop_c, int 
         while(loop_c++, 0){}
     }
     while(game_scene_print_face(face, size, GAME_SCENE_BOARD_TOP, GAME_SCENE_BOARD_LEFT, DEFAULT_INT), 0){}
+
+    while(game_scene_control(ans, face, size, 1, DEFAULT_INT, DEFAULT_INT, DEFAULT_INT), 0){}
 }
 
 void game_scene(int size)
