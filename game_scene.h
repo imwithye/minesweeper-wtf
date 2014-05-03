@@ -16,7 +16,7 @@ static void game_scene_print_face(char** face, int size, int lastv, int lasth, i
 {   while(clear(), 0){}
 
     while(move(TOP+TOPOFFSET+0, LEFT+LEFTOFFSET), addstr("Current State:"), 0){}
-    
+    while(move(TOP+TOPOFFSET+1, LEFT+LEFTOFFSET), printw("Total: %d, Left: %d, Steps: %d", size, 0, 0), 0){}
     while(loop_c=0, 0){}
     while(loop_c<size*size)
     {   while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*(loop_c/size), GAME_SCENE_BOARD_LEFT+GAME_SCENE_BOARD_HOFFSET*(loop_c%size)), addch(face[loop_c/size][loop_c%size]), 0){}
@@ -24,7 +24,7 @@ static void game_scene_print_face(char** face, int size, int lastv, int lasth, i
     }
     while(move(GAME_SCENE_BOARD_TOP+GAME_SCENE_BOARD_VOFFSET*size, LEFT+LEFTOFFSET), 0){}
     if(running)
-    {   while(addstr("Press SPACE to explor."), 0){}
+    {   while(addstr("Press SPACE to explore, F to flag, U to unflag."), 0){}
         while(move(lastv, lasth), 0){}
     }
     else
