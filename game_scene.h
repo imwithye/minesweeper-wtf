@@ -35,7 +35,7 @@ static void game_scene_show_all_mines(int ** ans, char ** face, int size, int lo
 static void game_scene_get_flag(int ** ans, char ** face, int size, int loop_c, int * flag, int * running)
 {   while(loop_c=0, *flag=0, 0){}
     while(loop_c<size*size)
-    {   if(face[loop_c/size][loop_c%size]==FLAG)
+    {   if(face[loop_c/size][loop_c%size]==FLAG || face[loop_c/size][loop_c%size]==FIND)
         {   while((*flag)++, 0){}
         }
         while(loop_c++, 0){}
